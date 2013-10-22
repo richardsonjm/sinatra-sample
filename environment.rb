@@ -3,9 +3,13 @@ require 'bundler'
 
 Bundler.require
 
-# require "sinatra/base"
-# require "sinatra/reloader"
+def load_dirs(array)
+  array.each do |dir|
+    Dir.entries(dir).each do |file|
+      next if file.start_with?(".")
+      require_relative "./#{dir}/#{file}"
+    end
+  end
+end
 
-require_relative './app/controllers/application_controller.rb'
-require_relative './app/controllers/main_controller.rb'
-
+load_dirs(['app/concerns', 'app/models', 'app/controllers'])

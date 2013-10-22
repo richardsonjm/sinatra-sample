@@ -1,10 +1,12 @@
 class MainController < ApplicationController  
 
   get '/' do
-    erb :'index'
+    @time_now = Time.now
+
+    erb :'main/index'
   end
 
-  get '/test' do
-    "TESTING 123"
+  get '/students/:name' do
+    erb :'main/students'
   end
 end
