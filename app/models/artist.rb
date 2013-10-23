@@ -6,16 +6,23 @@ class Artist
 
   @@all = []
 
-  def initialize
+  def initialize(params = {})
     @@all << self
     @songs = []
     @genres = []
+    populate_from_params if !params.empty?
   end
 
   def slug
     name.downcase.gsub(" ", "-")
   end
 
+  def populate_from_params(params)
+    self.name = params[:name]
+    song = Song.new
+    song.name= params[:song_name]
+    self.add_song(song)
+  end
 
   def self.find_by_slug(slug)
     @@all.detect{|a| a.slug == slug}

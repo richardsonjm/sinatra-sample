@@ -17,8 +17,7 @@ class ArtistsController < ApplicationController
 
   post '/artists' do
     # to create a new artist
-    artist = Artist.new
-    artist.name = params[:artist_name]
+    Artist.new(params[:artist])
 
     redirect "/artists/#{artist.slug}"
   end
