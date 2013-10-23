@@ -12,6 +12,16 @@ class Artist
     @genres = []
   end
 
+  def slug
+    name.downcase.gsub(" ", "-")
+  end
+
+
+  def self.find_by_slug(slug)
+    @@all.detect{|a| a.slug == slug}
+    # "SELECT * FROM artists WHERE slug = ?", slug
+  end
+
   def genre_has_artist?(genre)
     genre && !genre.artists.include?(self)
   end

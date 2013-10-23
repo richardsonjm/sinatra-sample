@@ -1,8 +1,31 @@
 class ArtistsController < ApplicationController
 
   get '/artists' do
-    @artists = Artist.all.sort_by{|a| a.name}
+    @artists = load_artists
     erb :'artists/index'
   end
 
+  get '/artists/new' do
+    erb :'artists/new'  
+  end
+
+  get '/artists/:id' do
+    @artist = Artist.find_by_slug(params[:id])
+    erb :'artists/show'
+  end
+
+
+  post '/artists' do
+    # to create a new artist
+    artist = Artist.new
+    artist.name = params[:artist_name]
+
+    redirect "/artists/#{artist.slug}"
+  end
+  
+  def load_artists
+    Artist.all.sort_by{|a| a.name}
+  end
+
 end
+
